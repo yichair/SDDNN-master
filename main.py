@@ -12,6 +12,7 @@ from utils import progress_bar
 from model import Model
 import trainer
 import math
+# hi
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
