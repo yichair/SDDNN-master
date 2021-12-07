@@ -1,0 +1,65 @@
+data:
+  dataloader: {batch_size: 16, class_balance: true, data_workers: 2}
+  dataset: {n_share: 31, n_total: 31, name: office, root_path: ./data/office}
+log: {log_interval: 10, root_dir: public}
+misc: {gpus: 1}
+model: {base_model: resnet50, pretrained_model: False}
+test: {resume_file: Clipart_to_Art.pkl, test_interval: 500, test_only: false}
+#train: {update_freq: 100, lr: 0.001, min_step: 10000, momentum: 0.9, weight_decay: 0.0005, tar_aux_weight: 0.7, reg_weight: 0.0001}
+# change by yi 12.2 tar_aux_weight 0.7->1.2(d->a:74.2%)->1.5(74.4%)->1.7(74.4%)
+# change by yi 12.3 reg_weight 0.0001->0.001(73.9%)
+# change by yi a->
+train: {update_freq: 100, lr: 0.001, min_step: 10000, momentum: 0.9, weight_decay: 0.0005, tar_aux_weight: 1.5, reg_weight: 0.0001}
+
+# NCC
+distance: 'cosine'
+epsilon: 0.00001
+threshold: 0
+#by yi
+datasets:
+    n_classes: 31
+    aux_classes: 3
+    # change dataset need chnage name and name_index
+    src:
+        name: 'dslr'
+        name_index: 1
+    tar:
+        type: 'rotate'
+        name: 'amazon'
+        name_index: 0
+        split: train
+        batch_size: 16
+        num_workers: 4
+        class_balance: true
+        limit: false
+        aux_classes: 3
+        bias_whole_image: 0.7
+        val_size: 0.9
+        img_transform:
+            jitter: 0
+            random_horiz_flip: 0
+            random_resize_crop:
+                size: [222, 222]
+#                size: [256, 256]
+                scale: [0.8, 1.0]
+        normalize:
+            mean: [0.485, 0.456, 0.406]
+            std: [0.229, 0.224, 0.225]
+
+    test:
+        type: 'rotate'
+        name: 'amazon'
+        split: test
+        batch_size: 16
+        num_workers: 4
+        class_balance: true
+        limit: false
+        aux_classes: 3
+        img_transform:
+            jitter: 0
+            random_resize_crop:
+                size: [222, 222]
+#                 size: [256, 256]
+        normalize:
+            mean: [0.485, 0.456, 0.406]
+            std: [0.229, 0.224, 0.225]

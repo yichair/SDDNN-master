@@ -1,11 +1,8 @@
 # by yi 数据集
-from datasets.config import *
+from config import *
 from datasets.data_loader import *
 from easydl import *
-from collections import Counter
 from torchvision.transforms.transforms import *
-from torch.utils.data import DataLoader
-from torch.utils.data.sampler import WeightedRandomSampler
 
 source_classes = [i for i in range(args.datasets.n_classes)]
 target_classes = [i for i in range(args.datasets.n_classes)]

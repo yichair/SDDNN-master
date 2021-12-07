@@ -17,7 +17,8 @@ class Dataset:
 import argparse
 parser = argparse.ArgumentParser(description='Code for *Learning to Transfer Examples for Partial Domain Adaptation*',
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument('--config', type=str, default='config.yaml', help='/path/to/config/file')
+# 默认配置文件为office-train-config.yaml
+parser.add_argument('--config', type=str, default='office-train-config.yaml', help='/path/to/config/file')
 
 args = parser.parse_args()
 
