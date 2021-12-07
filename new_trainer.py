@@ -38,12 +38,14 @@ class MainTrainer:
         # for batch_idx, (inputs, targets) in enumerate(self.trainloader):
         # by yi
         for i, tar_batch in enumerate(self.trainloader):
-            img_target = tar_batch['images']
+            img_target = tar_batch['images'] # 图片数据
             aux_label_target = tar_batch['aux_labels']
-            class_label_target = tar_batch['class_labels']
+            class_label_target = tar_batch['class_labels'] # 分类标签
             tar_idx = tar_batch['index']
+            batch_idx = i  # batch索引
 
-            inputs, targets = inputs.to(self.device), targets.to(self.device)
+            # inputs, targets = inputs.to(self.device), targets.to(self.device)
+            inputs, targets = img_target.to(self.device), class_label_target.to(self.device)
             optimizer.zero_grad()
             outputs = self.model.device_main(inputs)
             outputs = self.model.device_extract(outputs)
@@ -234,8 +236,17 @@ def test(name, epoch, model, device, testloader):
     correct = 0
     total = 0
     with torch.no_grad():
-        for batch_idx, (inputs, targets) in enumerate(testloader):
-            inputs, targets = inputs.to(device), targets.to(device)
+        for i, test_batch in enumerate(testloader):
+        # for batch_idx, (inputs, targets) in enumerate(testloader):
+
+            if isinstance(test_batch, list):
+                test_batch = test_batch[0]
+            inputs = test_batch['images'].to(device) # 输入图像
+            aux_label = test_batch['aux_labels'].to(device)
+            targets = test_batch['class_labels'].to(device) # 分类标签
+            batch_idx = i
+            # inputs, targets = inputs.to(device), targets.to(device)
+
             outputs = model(inputs)
             loss = criterion(outputs, targets)
 

@@ -41,8 +41,8 @@ transform_test = transforms.Compose([
 #     testset, batch_size=1, shuffle=False, num_workers=1)
 
 trainloader = target_train_dl
-testloader = target_test_dl
-
+# testloader = target_test_dl
+testloader = target_val_loader
 
 writer = SummaryWriter()
 
@@ -81,7 +81,7 @@ def train():
         cudnn.benchmark = True
 
     main_trainer = trainer.MainTrainer(
-        model, writer, trainloader, testloader, device)
+        model, writer, trainloader, testloader, device) # model网络模型、trainloader训练数据、testloader测试数据
     train_loop(main_trainer, 0.1)
     # model.load_main()
     # by yi
@@ -109,7 +109,8 @@ def pred(name, model, predloader):
 
 def train_loop(trainer, lr):
     print(f"Current learning rate: {lr}")
-    for epoch in range(0, 80):
+    # for epoch in range(0, 80):
+    for epoch in range(0, 10):  # 测试，训练10个epoch就够了
         trainer.train(epoch, lr)
         if trainer.test(epoch):
             no_progress = 0

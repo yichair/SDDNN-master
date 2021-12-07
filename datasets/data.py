@@ -29,4 +29,4 @@ test_transform = Compose([
 target_train_dl = get_target_dataloader(args.datasets.tar)  # 训练数据集
 target_pseudo_label_dl = get_pseudo_label_dataloader(args.datasets.tar)  # 带旋转标签的数据集
 target_test_dl = get_test_dataloader(args.datasets.test) # 测试数据集
-_, target_val_loader = get_train_val_dataloader(args.datasets.tar)
+_, target_val_loader = get_train_val_dataloader(args.datasets.tar)  # 验证集数据，main中使用其作为测试集数据
