@@ -12,7 +12,7 @@ from model import Model
 
 criterion = nn.CrossEntropyLoss()
 
-
+# 主模型训练器
 class MainTrainer:
     def __init__(self, model: Model, writer, trainloader, testloader, device):
         self.model = model
@@ -35,8 +35,8 @@ class MainTrainer:
         train_loss_total = 0
         correct = 0
         total = 0
+        # 统一训练终端、边缘、云端得到结果
         # for batch_idx, (inputs, targets) in enumerate(self.trainloader):
-        # by yi
         for i, tar_batch in enumerate(self.trainloader):
             img_target = tar_batch['images'] # 图片数据
             aux_label_target = tar_batch['aux_labels']
@@ -239,6 +239,7 @@ def test(name, epoch, model, device, testloader):
     correct = 0
     total = 0
     with torch.no_grad():
+
         for i, test_batch in enumerate(testloader):
         # for batch_idx, (inputs, targets) in enumerate(testloader):
 

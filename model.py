@@ -74,7 +74,7 @@ class DeviceMain(nn.Module):
 
 
 class DeviceClassifier(nn.Module):
-    def __init__(self, num_classes=6):
+    def __init__(self, num_classes=16):
         super(DeviceClassifier, self).__init__()
         self.pool = nn.AdaptiveAvgPool2d((8, 8))
         self.linear = nn.Linear(3072, num_classes)
@@ -112,7 +112,7 @@ class EdgeMain(nn.Module):
 
 
 class EdgeClassifier(nn.Module):
-    def __init__(self, num_classes=6):
+    def __init__(self, num_classes=16):
         super(EdgeClassifier, self).__init__()
         self.pool = nn.AdaptiveAvgPool2d((5, 5))
         self.linear = nn.Linear(3200, num_classes)
@@ -127,7 +127,8 @@ class EdgeClassifier(nn.Module):
 
 
 class Cloud(nn.Module):
-    def __init__(self, block=BasicBlock, num_blocks=[2, 2, 2, 2], num_classes=6):
+    # def __init__(self, block=BasicBlock, num_blocks=[2, 2, 2, 2], num_classes=6):
+    def __init__(self, block=BasicBlock, num_blocks=[2, 2, 2, 2], num_classes=16): # 修改分类后的类别数
         super(Cloud, self).__init__()
         self.in_planes, self.layer3 = make_layer(
             block, 128, 256, num_blocks[2], stride=2)
