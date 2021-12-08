@@ -45,7 +45,10 @@ class MainTrainer:
             batch_idx = i  # batch索引
 
             # inputs, targets = inputs.to(self.device), targets.to(self.device)
-            inputs, targets = img_target.to(self.device), class_label_target.to(self.device)
+            # inputs, targets = img_target.to(self.device), class_label_target.to(self.device)
+            inputs = img_target.cuda()
+            targets = class_label_target.cuda()
+
             optimizer.zero_grad()
             outputs = self.model.device_main(inputs)
             outputs = self.model.device_extract(outputs)
