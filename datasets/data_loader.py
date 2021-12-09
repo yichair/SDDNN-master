@@ -51,7 +51,7 @@ def get_train_val_dataloader(args):
     dataset = ConcatDataset(datasets)
     val_dataset = ConcatDataset(val_datasets)
     loader = torch.utils.data.DataLoader(dataset, batch_size=args.batch_size, shuffle=True, num_workers=4, pin_memory=True, drop_last=True)
-    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4, pin_memory=True, drop_last=False)
+    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4, pin_memory=True, drop_last=True)
     return loader, val_loader
 
 def get_target_dataloader(args):
@@ -67,8 +67,9 @@ def get_target_dataloader(args):
         dataset = RotateDataset(name, 'train', img_transformer=img_transformer,
                 rot_classes=args.aux_classes, bias_whole_image=args.bias_whole_image)
 
+    # 获取数据加载器
     loader = torch.utils.data.DataLoader(dataset, batch_size=args.batch_size,
-            shuffle=True, num_workers=args.num_workers, pin_memory=True, drop_last=False)
+            shuffle=True, num_workers=args.num_workers, pin_memory=True, drop_last=True)
     return loader
 
 def get_pseudo_label_dataloader(args):
@@ -85,7 +86,7 @@ def get_pseudo_label_dataloader(args):
                 rot_classes=args.aux_classes, bias_whole_image=args.bias_whole_image)
 
     loader = torch.utils.data.DataLoader(dataset, batch_size=args.batch_size,
-            shuffle=False, num_workers=args.num_workers, pin_memory=True, drop_last=False)
+            shuffle=False, num_workers=args.num_workers, pin_memory=True, drop_last=True)
     return loader
 
 def get_test_dataloader(args):
@@ -102,7 +103,7 @@ def get_test_dataloader(args):
         val_dataset = Subset(val_dataset, args.limit)
         print("Using %d subset of dataset" % args.limit)
     dataset = ConcatDataset([val_dataset])
-    loader = torch.utils.data.DataLoader(dataset, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers, pin_memory=True, drop_last=False)
+    loader = torch.utils.data.DataLoader(dataset, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers, pin_memory=True, drop_last=True)
     return loader
 
 def get_jig_train_transformers(args):
