@@ -49,11 +49,15 @@ class MainTrainer:
             inputs = img_target.cuda()
             targets = class_label_target.cuda()
 
+
             optimizer.zero_grad()
             outputs = self.model.device_main(inputs)
             outputs = self.model.device_extract(outputs)
             outputs = self.model.edge_main(outputs)
             outputs = self.model.cloud(outputs)
+            # print(outputs)
+            # print(targets)
+            # va()
             loss = criterion(outputs, targets)
             loss.backward()
             optimizer.step()
@@ -71,6 +75,9 @@ class MainTrainer:
         loss = train_loss
         self.writer.add_scalar('[Main] Loss/train', loss, epoch)
         self.writer.add_scalar('[Main] Accuracy/train', 100.*acc, epoch)
+        # 添加准确率记录文件
+        with open('./log.txt', mode='a+', encoding="utf-8") as w:
+            w.write("epoch"+ str(epoch) + "  acc:" + str(acc) + "\n")
 
     def test(self, epoch):
         self.model.device_main.eval()

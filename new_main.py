@@ -110,7 +110,7 @@ def pred(name, model, predloader):
 def train_loop(trainer, lr):
     print(f"Current learning rate: {lr}")
     # for epoch in range(0, 80):
-    for epoch in range(0, 10):  # 测试，训练10个epoch就够了
+    for epoch in range(0, 50):  # 测试，训练30个epoch就够了
         trainer.train(epoch, lr)
         if trainer.test(epoch):
             no_progress = 0

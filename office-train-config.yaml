@@ -1,5 +1,5 @@
 data:
-  dataloader: {batch_size: 16, class_balance: true, data_workers: 2}
+  dataloader: {batch_size: 4, class_balance: true, data_workers: 2}
   dataset: {n_share: 31, n_total: 31, name: office, root_path: ./data/office}
 log: {log_interval: 10, root_dir: public}
 misc: {gpus: 1}
@@ -28,7 +28,7 @@ datasets:
         name: 'amazon'
         name_index: 0
         split: train
-        batch_size: 16
+        batch_size: 4
         num_workers: 4
         class_balance: true
         limit: false
@@ -50,7 +50,7 @@ datasets:
         type: 'rotate'
         name: 'amazon'
         split: test
-        batch_size: 16
+        batch_size: 4
         num_workers: 4
         class_balance: true
         limit: false
